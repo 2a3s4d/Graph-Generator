@@ -1,7 +1,7 @@
 import csv as c
 
 
-def getRelation(qx: str, qy: str, file_path: str) -> tuple:
+def getRelation(qx: str, qy: str, file_path: str, type_x=str, type_y=str) -> tuple:
     """
     This is a function that extracts the requested data from a csv
 
@@ -30,7 +30,6 @@ def getRelation(qx: str, qy: str, file_path: str) -> tuple:
         read_csv = c.reader(f)
         for row in read_csv:
             csv.append(row)
-    
     # indices of the data to be extracted
     x_data_index = csv[0].index(qx)
     y_data_index = csv[0].index(qy)
@@ -41,8 +40,7 @@ def getRelation(qx: str, qy: str, file_path: str) -> tuple:
     # correct order of tick mark labels --> called map because for consistency with singe variable data function
     mapx = find_map(data, x_data_index)
     mapy = find_map(data, y_data_index)
-    print(mapx)
-    print(mapy)
+    
     # The code is structured in this way, as opposed to x_points = [row[x_data_index] for row in data],
     # so the x and y labels on the final plot will be placed in logical order --> (1, 2, 3, 4, 5) rather
     # than (2, 5, 3, 1, 4) if the data had been put in by which ever rows came first
@@ -50,8 +48,8 @@ def getRelation(qx: str, qy: str, file_path: str) -> tuple:
         for group_y in mapy:
             for row in data:
                 if (row[x_data_index] == group_x and row[y_data_index] == group_y):
-                    x_points.append(group_x)
-                    y_points.append(group_y)
+                    x_points.append(type_x(group_x))
+                    y_points.append(type_y(group_y))
     
     return(x_points, y_points)
 

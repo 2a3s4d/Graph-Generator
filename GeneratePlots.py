@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import GetData
 
-def genRelationPlot(plot_type, qx: str, qy: str, file_path: str, title = "", x_label = "", y_label = "") -> None:
+def genRelationPlot(plot_type, qx: str, qy: str, file_path: str, title = "", x_label = "", y_label = "", type_x = str, type_y = str, alpha=1.0) -> None:
     """
     Generates a plot which relates 2 variables
 
@@ -25,11 +25,12 @@ def genRelationPlot(plot_type, qx: str, qy: str, file_path: str, title = "", x_l
         y_label = qy
     
     
-    relation = GetData.getRelation(qx, qy, file_path)
+    relation = GetData.getRelation(qx, qy, file_path, type_x=type_x, type_y=type_y)
     x_points = relation[0]
     y_points = relation[1]
-    
-    plot_type(x_points, y_points, alpha=0.05)
+    print(y_points[0:10])
+    print(type(y_points[0]))
+    plot_type(x_points, y_points, alpha=alpha)
     
     plt.title(title)
     plt.xlabel(x_label)
